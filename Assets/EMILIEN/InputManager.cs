@@ -70,13 +70,22 @@ public class InputManager : MonoBehaviour
 {
     private KeyManager keyManager = new KeyManager();
     private KeyCode selectedKey;
-
-    private void Start(){
-        UpdateTextKey();
-    }
+    
     private bool KeyIsAvailable(KeyCode key){
+        if (key != selectedKey)
+            return true;
+    }
 
-        return key != null;
+    public void ChangeKey(){
+        foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
+            if (Input.GetKeyDown(key)){
+                selectedKey = key;
+                UpdateKey(selectedKey);
+                UpdateTextKey();
+                break;
+            }
+            
+        }
     }
 
     public void UpdateKey(KeyCode newKey){
@@ -84,18 +93,6 @@ public class InputManager : MonoBehaviour
             if (keyManager.keyCodeDictio.TryGetValue(1, out selectedKey)){
 
             }
-        }
-    }
-
-    public void ChangeKey(){
-        foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
-            if (Input.GetKeyDown(key)){
-                selectedKey = key;
-                UpdateTextKey();
-                UpdateKey(selectedKey);
-                break;
-            }
-            
         }
     }
 
