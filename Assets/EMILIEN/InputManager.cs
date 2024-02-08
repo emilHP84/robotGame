@@ -71,10 +71,10 @@ public class InputManager : MonoBehaviour
     private KeyManager keyManager = new KeyManager();
     private KeyCode selectedKey;
     
-    private bool KeyIsAvailable(KeyCode key){
+    /*private bool KeyIsAvailable(KeyCode key){
         if (key != selectedKey)
             return true;
-    }
+    }*/
 
     public void ChangeKey(){
         foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
@@ -89,11 +89,11 @@ public class InputManager : MonoBehaviour
     }
 
     public void UpdateKey(KeyCode newKey){
-        if (KeyIsAvailable(newKey)){
+        /*if (KeyIsAvailable(newKey)){
             if (keyManager.keyCodeDictio.TryGetValue(1, out selectedKey)){
 
             }
-        }
+        }*/
     }
 
     void UpdateTextKey(){
