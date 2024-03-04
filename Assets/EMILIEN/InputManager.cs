@@ -1,9 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyManager : MonoBehaviour{
-    public Dictionary<int, KeyCode> keyCodeDictio = new Dictionary<int, KeyCode>();
+
+public class KeyManager{
+    public Dictionary<Enum, KeyCode> keyCodeDictionary = new Dictionary<Enum, KeyCode>();
+
+    // ["forwardKey" ; KeyCode.Z], ["leftKey" ; KeyCode.Q]
+
 
     [Header("mouvement")]
     public KeyCode forwardKey = KeyCode.Z;
@@ -37,50 +42,50 @@ public class KeyManager : MonoBehaviour{
 
     
     void Start(){
-        keyCodeDictio.Add(0,forwardKey);
-        keyCodeDictio.Add(0,backKey);
-        keyCodeDictio.Add(0,leftKey);
-        keyCodeDictio.Add(0,rightkKey);
-        keyCodeDictio.Add(0,runKey);
-        keyCodeDictio.Add(0,croutchkKey);
-        keyCodeDictio.Add(0,jumpKey);
+        keyCodeDictionary.Add(0,forwardKey);
+        keyCodeDictionary.Add(0,backKey);
+        keyCodeDictionary.Add(0,leftKey);
+        keyCodeDictionary.Add(0,rightkKey);
+        keyCodeDictionary.Add(0,runKey);
+        keyCodeDictionary.Add(0,croutchkKey);
+        keyCodeDictionary.Add(0,jumpKey);
 
-        keyCodeDictio.Add(0,interactKey);
-        keyCodeDictio.Add(0,throwKey);
+        keyCodeDictionary.Add(0,interactKey);
+        keyCodeDictionary.Add(0,throwKey);
 
-        keyCodeDictio.Add(0,reloadKey);
-        keyCodeDictio.Add(0,specialWeaponKey);
-        keyCodeDictio.Add(0,shooKey);
-        keyCodeDictio.Add(0,aimKey);
+        keyCodeDictionary.Add(0,reloadKey);
+        keyCodeDictionary.Add(0,specialWeaponKey);
+        keyCodeDictionary.Add(0,shooKey);
+        keyCodeDictionary.Add(0,aimKey);
 
-        keyCodeDictio.Add(0,abilityOneKey);
-        keyCodeDictio.Add(0,abilityTwoKey);
-        keyCodeDictio.Add(0,abilityThreeKey);
+        keyCodeDictionary.Add(0,abilityOneKey);
+        keyCodeDictionary.Add(0,abilityTwoKey);
+        keyCodeDictionary.Add(0,abilityThreeKey);
 
-        keyCodeDictio.Add(0,mapKey);
-        keyCodeDictio.Add(0,tchatKey);
-        keyCodeDictio.Add(0,statKey);
+        keyCodeDictionary.Add(0,mapKey);
+        keyCodeDictionary.Add(0,tchatKey);
+        keyCodeDictionary.Add(0,statKey);
     }
 }
 
 
 
-
+[RequireComponent(typeof(KeyManager))]
 public class InputManager : MonoBehaviour
 {
     private KeyManager keyManager = new KeyManager();
     private KeyCode selectedKey;
     
-    /*private bool KeyIsAvailable(KeyCode key){
-        if (key != selectedKey)
-            return true;
-    }*/
+    private bool KeyIsAvailable(KeyCode key){
+        if (key != selectedKey) return true;
+        else return false;
+    }
 
-    public void ChangeKey(){
+    public void ChangeKey(string nameKey){
         foreach(KeyCode key in System.Enum.GetValues(typeof(KeyCode))){
             if (Input.GetKeyDown(key)){
                 selectedKey = key;
-                UpdateKey(selectedKey);
+                UpdateKey(nameKey, selectedKey);
                 UpdateTextKey();
                 break;
             }
@@ -88,12 +93,16 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void UpdateKey(KeyCode newKey){
-        /*if (KeyIsAvailable(newKey)){
-            if (keyManager.keyCodeDictio.TryGetValue(1, out selectedKey)){
+    private void UpdateKey(string keyName, KeyCode newKey){
+        if (KeyIsAvailable(newKey)){
 
-            }
-        }*/
+            keyManager.keyCodeDictionary[keyName] = newKey;
+
+            /*if (keyManager.keyCodeDictio.TryGetValue(1, out selectedKey)){
+
+            }*/
+
+        }
     }
 
     void UpdateTextKey(){
